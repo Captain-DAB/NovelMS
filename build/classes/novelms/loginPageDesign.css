@@ -1,0 +1,24 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 11, 2024, 5:34:04 AM
+    Author     : USER
+*/
+
+.welcome{
+    -fx-background-color: #30343E;
+}
+.login{
+    -fx-backgrond-color: #FFFFFF;
+}
+.textfield{
+    -fx-background-color: transparent;
+/*    -fx-border: none;*/
+    -fx-border-bottom: 3px solid red;
+    -fx-border-width: 0.5px;
+}
+.textfield:focused{
+    -fx-border-width: 1px;
+}

@@ -1,0 +1,54 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 11, 2024, 5:34:04 AM
+    Author     : USER
+*/
+
+.page{
+    -fx-background-color: #d1001f;
+}
+.welcome{
+    -fx-background-color: #30343E;
+    -fx-background-radius: 10px 0 0 10px;
+}
+.login{
+    -fx-background-color: #FFF;
+    -fx-background-radius: 0 10px 10px 0;
+}
+.head-label{
+    -fx-border-color: #d1001f;
+    -fx-border-width: 0 0 0 4px;
+    -fx-padding: 0 0 0 5px;
+}
+.textfield{
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1.5 0;
+    -fx-border-color: #E0E0E0;
+}
+.textfield:focused{
+/*    -fx-border-width: 1px;*/
+}
+.loginBtn{
+    -fx-background-color: #d1001f;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 15px;
+}
+.loginBtn:hover{
+    -fx-background-color: #f01e2c;
+}
+.create-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+}
+.create-btn:hover{
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
