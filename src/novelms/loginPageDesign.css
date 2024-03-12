@@ -18,6 +18,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #FFF;
     -fx-background-radius: 0 10px 10px 0;
 }
+.register{
+    -fx-background-color: #FFF;
+    -fx-background-radius: 10px 0 0 10px;
+}
 .head-label{
     -fx-border-color: #d1001f;
     -fx-border-width: 0 0 0 4px;
