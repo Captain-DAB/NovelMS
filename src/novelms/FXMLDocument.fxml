@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +17,7 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="page" stylesheets="@loginPageDesign.css">
          <children>
-            <AnchorPane fx:id="login_form" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="75.0">
+            <AnchorPane fx:id="login_form" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
                <children>
                   <Label layoutX="25.0" layoutY="140.0" text="Username:">
                      <font>
@@ -29,19 +30,19 @@
                      </font>
                   </Label>
                   <TextField fx:id="si_username" layoutX="25.0" layoutY="168.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <TextField fx:id="si_password" layoutX="25.0" layoutY="241.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <Button fx:id="loginBtn" layoutX="25.0" layoutY="330.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Login" />
-                  <Label fx:id="loginAccount" layoutX="65.0" layoutY="43.0" prefHeight="35.0" prefWidth="150.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Login Account">
+                  <Label fx:id="loginAccount" layoutX="75.0" layoutY="35.0" prefHeight="35.0" prefWidth="150.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Login Account">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
+                  <Button fx:id="loginBtn" layoutX="25.0" layoutY="330.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Login" />
                   <Hyperlink fx:id="forgotPassword" layoutX="99.0" layoutY="396.0" onAction="#switchForgotPass" text="Forgot Password?" textFill="#d1001f" />
+                  <PasswordField fx:id="si_password" layoutX="27.0" layoutY="243.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="register_form" layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="register" stylesheets="@loginPageDesign.css">
+            <AnchorPane fx:id="register_form" layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="register" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.topAnchor="75.0">
                <children>
-                  <Label fx:id="registerAccount" layoutX="62.0" layoutY="37.0" prefHeight="35.0" prefWidth="177.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Register Account">
+                  <Label fx:id="registerAccount" layoutX="65.0" layoutY="37.0" prefHeight="35.0" prefWidth="177.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Register Account">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -57,7 +58,6 @@
                      </font>
                   </Label>
                   <TextField fx:id="su_username" layoutX="25.0" layoutY="124.0" onAction="#regBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <TextField fx:id="su_password" layoutX="25.0" layoutY="185.0" onAction="#regBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                   <Button fx:id="registerBtn" layoutX="25.0" layoutY="383.0" mnemonicParsing="false" onAction="#regBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Register" />
                   <Label layoutX="26.0" layoutY="295.0" text="Answer:">
                      <font>
@@ -71,33 +71,40 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="su_question" layoutX="26.0" layoutY="250.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <PasswordField fx:id="su_password" layoutX="26.0" layoutY="185.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="fp_questionForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false">
+            <AnchorPane fx:id="fp_questionForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
                <children>
-                  <Label layoutX="25.0" layoutY="140.0" prefHeight="21.0" prefWidth="70.0" text="Question:">
+                  <Label layoutX="25.0" layoutY="190.0" prefHeight="21.0" prefWidth="70.0" text="Question:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="213.0" prefHeight="21.0" prefWidth="76.0" text="Answer:">
+                  <Label layoutX="27.0" layoutY="263.0" prefHeight="21.0" prefWidth="76.0" text="Answer:">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="fp_answer" layoutX="25.0" layoutY="241.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <Button fx:id="fp_proceedBtn" layoutX="25.0" layoutY="301.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Proceed" />
+                  <TextField fx:id="fp_answer" layoutX="25.0" layoutY="291.0" onAction="#proceedBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <Button fx:id="fp_proceedBtn" layoutX="25.0" layoutY="348.0" mnemonicParsing="false" onAction="#proceedBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Proceed" />
                   <Label fx:id="loginAccount1" layoutX="65.0" layoutY="43.0" prefHeight="35.0" prefWidth="177.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Forgot Password">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="fp_question" layoutX="25.0" layoutY="169.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <Button fx:id="fp_back" layoutX="115.0" layoutY="385.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Back" />
-                  <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_LEFT" layoutX="125.0" layoutY="406.0" size="1.5em" />
+                  <ComboBox fx:id="fp_question" layoutX="25.0" layoutY="219.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <Button fx:id="fp_back" layoutX="115.0" layoutY="400.0" mnemonicParsing="false" onAction="#backToLoginForm" prefHeight="31.0" prefWidth="70.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Back" />
+                  <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_LEFT" layoutX="125.0" layoutY="421.0" size="1.5em" />
+                  <Label layoutX="27.0" layoutY="124.0" prefHeight="21.0" prefWidth="76.0" text="Username:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="fp_username" layoutX="25.0" layoutY="152.0" onAction="#proceedBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="np_changePasswordForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false">
+            <AnchorPane fx:id="np_changePasswordForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
                <children>
                   <Label layoutX="25.0" layoutY="140.0" prefHeight="21.0" prefWidth="104.0" text="New Password:">
                      <font>
@@ -109,16 +116,16 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="np_confirmPassword" layoutX="25.0" layoutY="241.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <Button fx:id="np_changePasswordBtn" layoutX="25.0" layoutY="301.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Change Password" />
+                  <Button fx:id="np_changePasswordBtn" layoutX="25.0" layoutY="301.0" mnemonicParsing="false" onAction="#changePassBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Change Password" />
                   <Label layoutX="65.0" layoutY="43.0" prefHeight="35.0" prefWidth="177.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Forgot Password">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="np_back" layoutX="115.0" layoutY="385.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Back" />
+                  <Button fx:id="np_back" layoutX="115.0" layoutY="385.0" mnemonicParsing="false" onAction="#backToQuestionForm" prefHeight="31.0" prefWidth="70.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Back" />
                   <FontAwesomeIcon fx:id="fp_backToQuestionForm" fill="WHITE" glyphName="ANGLE_LEFT" layoutX="125.0" layoutY="406.0" size="1.5em" />
-                  <TextField fx:id="np_newPassword" layoutX="25.0" layoutY="167.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <PasswordField fx:id="np_newPassword" layoutX="25.0" layoutY="168.0" onAction="#changePassBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <PasswordField fx:id="np_confirmPassword" layoutX="25.0" layoutY="240.0" onAction="#changePassBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="welcome" layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="welcome" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="75.0">
