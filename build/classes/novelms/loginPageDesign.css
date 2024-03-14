@@ -7,9 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : USER
 */
 
-.page{
-    -fx-background-color: #d1001f;
+.background-image {
+    -fx-background-image: url("../image/page-bg1.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
 }
+
 .welcome{
     -fx-background-color: #30343E;
     -fx-background-radius: 10px 0 0 10px;

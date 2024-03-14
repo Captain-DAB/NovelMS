@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@loginPageDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="novelms.FXMLDocumentController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="background-image" stylesheets="@loginPageDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="novelms.FXMLDocumentController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="page" stylesheets="@loginPageDesign.css">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@loginPageDesign.css">
          <children>
             <AnchorPane fx:id="login_form" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
                <children>
@@ -30,7 +30,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="si_username" layoutX="25.0" layoutY="168.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
-                  <Label fx:id="loginAccount" layoutX="75.0" layoutY="35.0" prefHeight="35.0" prefWidth="150.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Login Account">
+                  <Label fx:id="loginAccount" layoutX="77.0" layoutY="49.0" prefHeight="35.0" prefWidth="150.0" styleClass="head-label" stylesheets="@loginPageDesign.css" text="Login Account">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -38,6 +38,11 @@
                   <Button fx:id="loginBtn" layoutX="25.0" layoutY="330.0" mnemonicParsing="false" onAction="#loginBtn" prefHeight="35.0" prefWidth="250.0" styleClass="loginBtn" stylesheets="@loginPageDesign.css" text="Login" />
                   <Hyperlink fx:id="forgotPassword" layoutX="99.0" layoutY="396.0" onAction="#switchForgotPass" text="Forgot Password?" textFill="#d1001f" />
                   <PasswordField fx:id="si_password" layoutX="27.0" layoutY="243.0" onAction="#loginBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <ImageView fitHeight="19.0" fitWidth="70.0" layoutX="115.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="register_form" layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="register" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.topAnchor="75.0">
@@ -72,6 +77,11 @@
                   </Label>
                   <ComboBox fx:id="su_question" layoutX="26.0" layoutY="250.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                   <PasswordField fx:id="su_password" layoutX="26.0" layoutY="185.0" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <ImageView fitHeight="19.0" fitWidth="70.0" layoutX="119.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="fp_questionForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
@@ -102,6 +112,11 @@
                      </font>
                   </Label>
                   <TextField fx:id="fp_username" layoutX="25.0" layoutY="152.0" onAction="#proceedBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <ImageView fitHeight="19.0" fitWidth="70.0" layoutX="103.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="np_changePasswordForm" layoutX="450.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="login" stylesheets="@loginPageDesign.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="75.0">
@@ -126,6 +141,11 @@
                   <FontAwesomeIcon fx:id="fp_backToQuestionForm" fill="WHITE" glyphName="ANGLE_LEFT" layoutX="125.0" layoutY="406.0" size="1.5em" />
                   <PasswordField fx:id="np_newPassword" layoutX="25.0" layoutY="168.0" onAction="#changePassBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
                   <PasswordField fx:id="np_confirmPassword" layoutX="25.0" layoutY="240.0" onAction="#changePassBtn" prefHeight="30.0" prefWidth="250.0" styleClass="textfield" stylesheets="@loginPageDesign.css" />
+                  <ImageView fitHeight="19.0" fitWidth="70.0" layoutX="111.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="welcome" layoutX="150.0" layoutY="75.0" prefHeight="450.0" prefWidth="300.0" styleClass="welcome" stylesheets="@loginPageDesign.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="75.0">
@@ -159,6 +179,11 @@
                   </ImageView>
                </children>
             </AnchorPane>
+            <ImageView fitHeight="19.0" fitWidth="83.0" layoutX="803.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/logo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
