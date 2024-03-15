@@ -13,3 +13,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .side-page{
     -fx-background-color: #F5F5F5;
 }
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
+}
+.white-bg{
+    -fx-background-color: #fff;
+}
+.radius{
+    -fx-background-radius: 5px;
+}
+.btn{
+    -fx-background-color: #fff;
+}

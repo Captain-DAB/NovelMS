@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -70,6 +76,68 @@
                      </children>
                   </AnchorPane>
                </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="side-page" stylesheets="@mainPage.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="25.0" layoutY="57.0" prefHeight="627.0" prefWidth="861.0" stylesheets="@mainPage.css">
+                           <children>
+                              <Label layoutX="20.0" layoutY="14.0" text="Customer Details">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="20.0" layoutY="69.0" prefHeight="30.0" prefWidth="230.0" />
+                              <Label layoutX="20.0" layoutY="45.0" text="Name:">
+                                 <font>
+                                    <Font name="System Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="592.0" layoutY="69.0" prefHeight="30.0" prefWidth="230.0" />
+                              <Label layoutX="592.0" layoutY="45.0" text="Email Address:">
+                                 <font>
+                                    <Font name="System Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="288.0" layoutY="69.0" prefHeight="30.0" prefWidth="230.0" />
+                              <Label layoutX="288.0" layoutY="45.0" prefHeight="20.0" prefWidth="104.0" text="Phone Number:">
+                                 <font>
+                                    <Font name="System Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="20.0" layoutY="130.0" prefHeight="30.0" prefWidth="230.0" />
+                              <Label layoutX="20.0" layoutY="106.0" prefHeight="20.0" prefWidth="60.0" text="Address:">
+                                 <font>
+                                    <Font name="System Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="20.0" layoutY="184.0" prefHeight="20.0" prefWidth="146.0" text="Payment Information">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="20.0" layoutY="219.0" prefHeight="20.0" prefWidth="37.0" text="Type:">
+                                 <font>
+                                    <Font name="System Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox layoutX="20.0" layoutY="239.0" prefHeight="30.0" prefWidth="230.0" />
+                           </children>
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="white-bg" />
+                              <String fx:value="radius" />
+                           </styleClass>
+                        </AnchorPane>
+                        <Label layoutX="68.0" layoutY="16.0" text="Create New Order">
+                           <font>
+                              <Font name="Arial" size="22.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="34.0" styleClass="btn" stylesheets="@mainPage.css" />
+                        <FontAwesomeIcon glyphName="ARROW_LEFT" layoutX="33.0" layoutY="35.0" opacity="0.69" size="1.5em" />
+                     </children>
+                  </AnchorPane>
+               </center>
             </BorderPane>
          </children>
       </AnchorPane>
