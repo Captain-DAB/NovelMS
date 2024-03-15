@@ -1,0 +1,15 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 14, 2024, 2:41:04 PM
+    Author     : USER
+*/
+
+.side-nav{
+    -fx-background-color: #d1001f;
+}
+.side-page{
+    -fx-background-color: #F5F5F5;
+}

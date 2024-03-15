@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
-</AnchorPane>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="53.0" layoutY="71.0" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <left>
+                  <AnchorPane prefHeight="700.0" prefWidth="87.0" styleClass="side-nav" stylesheets="@mainPage.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="32.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/dashboard.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard" layoutX="8.0" layoutY="125.0" text="Dashboard" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="32.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/product.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard1" layoutX="14.0" layoutY="192.0" text="Products" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/purchase.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard11" layoutX="10.0" layoutY="255.0" prefHeight="25.0" prefWidth="62.0" text="Purchase" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/employee.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard111" layoutX="8.0" layoutY="320.0" text="Employee" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/report.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard1111" layoutX="17.0" layoutY="384.0" text="Report" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </AnchorPane>
+               </left>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
