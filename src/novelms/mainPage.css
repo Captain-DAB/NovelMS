@@ -25,3 +25,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .btn{
     -fx-background-color: #fff;
 }
+.textfield{
+    -fx-background-color: transparent;
+    -fx-border-color: #ae9393;
+    -fx-border-width: 0.5px;
+}
+.textfield:focused{
+    -fx-border-width: 1px;
+}
