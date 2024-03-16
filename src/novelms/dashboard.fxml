@@ -64,12 +64,22 @@
                               <Font size="13.0" />
                            </font>
                         </Hyperlink>
-                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/order.png" />
+                           </image>
+                        </ImageView>
+                        <Hyperlink fx:id="dashboard1111" layoutX="17.0" layoutY="389.0" text="Orders" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Hyperlink>
+                        <ImageView fitHeight="23.0" fitWidth="35.0" layoutX="29.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/report.png" />
                            </image>
                         </ImageView>
-                        <Hyperlink fx:id="dashboard1111" layoutX="17.0" layoutY="384.0" text="Report" textFill="WHITE">
+                        <Hyperlink fx:id="dashboard11111" layoutX="17.0" layoutY="452.0" text="Report" textFill="WHITE">
                            <font>
                               <Font size="13.0" />
                            </font>
