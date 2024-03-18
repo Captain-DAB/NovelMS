@@ -36,7 +36,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-color: #E0E0E0;
 }
 .textfield:focused{
-/*    -fx-border-width: 1px;*/
+    /*    -fx-border-width: 1px;*/
 }
 .loginBtn{
     -fx-background-color: #d1001f;
@@ -48,6 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .loginBtn:hover{
     -fx-background-color: #f01e2c;
 }
+
 .create-btn{
     -fx-background-color: transparent;
     -fx-cursor: hand;
