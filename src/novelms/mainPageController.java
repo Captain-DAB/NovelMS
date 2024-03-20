@@ -218,6 +218,127 @@ public class mainPageController implements Initializable {
         }
     }
 
+    public void productUpdateBtn() {
+
+        if (product_productID.getText().isEmpty()
+                || product_productName.getText().isEmpty()
+                || product_type.getSelectionModel().getSelectedItem() == null
+                || product_stock.getText().isEmpty()
+                || product_price.getText().isEmpty()
+                || product_status.getSelectionModel().getSelectedItem() == null
+                || data.path == null
+                || data.id == 0) {
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        } else {
+            String path = data.path;
+            path = path.replace("\\", "\\\\");
+
+            String updateData = "UPDATE product SET "
+                    + "prod_id = '" + product_productID.getText() + "', prod_name = '"
+                    + product_productName.getText() + "', type = '"
+                    + product_type.getSelectionModel().getSelectedItem() + "', stock = '"
+                    + product_stock.getText() + "', price = '"
+                    + product_price.getText() + "', status = '"
+                    + product_status.getSelectionModel().getSelectedItem() + "', image = '"
+                    + path + "', date = '"
+                    + data.date + "' WHERE id = " + data.id;
+
+            connect = database.connectDB();
+
+            try {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Product ID: " + product_productID.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    prepare = connect.prepareStatement(updateData);
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Succeefully Updated!");
+                    alert.showAndWait();
+
+                    //TO UPDATE YOUR TABLE VIEW
+                    productShowData();
+                    //TO CLEAR YOUR FIELDS
+                    productClearBtn();
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cancelled.");
+                    alert.showAndWait();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    public void productDeleteBtn() {
+
+        if (data.id == 0) {
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        } else {
+
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to DELETE Product ID: " + product_productID.getText() + "?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get().equals(ButtonType.OK)) {
+                String deleteData = "DELETE FROM product WHERE id = " + data.id;
+                try {
+                    prepare = connect.prepareStatement(deleteData);
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+                    //TO UPDATE YOUR TABLE VIEW
+                    productShowData();
+                    //TO CLEAR YOUR FIELDS
+                    productClearBtn();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Cancelled.");
+                alert.showAndWait();
+            }
+
+        }
+
+    }
+
     public void productClearBtn() {
 
         product_productID.setText("");
