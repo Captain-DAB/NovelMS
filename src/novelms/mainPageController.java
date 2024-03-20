@@ -4,12 +4,14 @@
  */
 package novelms;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -29,8 +31,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -70,25 +75,25 @@ public class mainPageController implements Initializable {
     private Button product_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> product_col_ProductID;
+    private TableColumn<productData, String> product_col_ProductID;
 
     @FXML
-    private TableColumn<?, ?> product_col_ProductName;
+    private TableColumn<productData, String> product_col_ProductName;
 
     @FXML
-    private TableColumn<?, ?> product_col_date;
+    private TableColumn<productData, String> product_col_date;
 
     @FXML
-    private TableColumn<?, ?> product_col_price;
+    private TableColumn<productData, String> product_col_price;
 
     @FXML
-    private TableColumn<?, ?> product_col_status;
+    private TableColumn<productData, String> product_col_status;
 
     @FXML
-    private TableColumn<?, ?> product_col_stock;
+    private TableColumn<productData, String> product_col_stock;
 
     @FXML
-    private TableColumn<?, ?> product_col_type;
+    private TableColumn<productData, String> product_col_type;
 
     @FXML
     private Button product_deleteBtn;
@@ -115,7 +120,7 @@ public class mainPageController implements Initializable {
     private TextField product_stock;
 
     @FXML
-    private TableView<?> product_tableView;
+    private TableView<productData> product_tableView;
 
     @FXML
     private ComboBox<?> product_type;
@@ -130,11 +135,196 @@ public class mainPageController implements Initializable {
     private Hyperlink report;
 
     private Alert alert;
+    private Image image;
 
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    public void productAddBtn() {
+
+        if (product_productID.getText().isEmpty()
+                || product_productName.getText().isEmpty()
+                || product_type.getSelectionModel().getSelectedItem() == null
+                || product_stock.getText().isEmpty()
+                || product_price.getText().isEmpty()
+                || product_status.getSelectionModel().getSelectedItem() == null
+                || data.path == null) {
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        } else {
+            //CHECK PRODUCT ID
+            String checkProdID = "SELECT prod_id FROM product WHERE prod_id = '"
+                    + product_productID.getText() + "'";
+
+            connect = database.connectDB();
+
+            try {
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(checkProdID);
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText(product_productID.getText() + "is already taken");
+                    alert.showAndWait();
+                } else {
+                    String insertData = "INSERT INTO product "
+                            + "(prod_id, prod_name, type, stock, price, status, image, date) "
+                            + "VALUES(?,?,?,?,?,?,?,?)";
+
+                    prepare = connect.prepareStatement(insertData);
+                    prepare.setString(1, product_productID.getText());
+                    prepare.setString(2, product_productName.getText());
+                    prepare.setString(3, (String) product_type.getSelectionModel().getSelectedItem());
+                    prepare.setString(4, product_stock.getText());
+                    prepare.setString(5, product_price.getText());
+                    prepare.setString(6, (String) product_status.getSelectionModel().getSelectedItem());
+
+                    String path = data.path;
+                    path = path.replace("\\", "\\\\");
+
+                    prepare.setString(7, path);
+
+                    //TO GET CURRENT DATE
+                    Date date = new Date();
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                    prepare.setString(8, String.valueOf(sqlDate));
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added");
+                    alert.showAndWait();
+
+                    productShowData();
+                    productClearBtn();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void productClearBtn() {
+
+        product_productID.setText("");
+        product_productName.setText("");
+        product_type.getSelectionModel().clearSelection();
+        product_stock.setText("");
+        product_price.setText("");
+        product_status.getSelectionModel().clearSelection();
+        data.path = "";
+        data.id = 0;
+        product_imageView.setImage(null);
+
+    }
+
+    //LET'S MAKE A BEHAVIOR FOR IMPORT BTN FIRST
+    public void productImportBtn() {
+
+        FileChooser openFile = new FileChooser();
+        openFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File", "*png", "*jpg"));
+
+        File file = openFile.showOpenDialog(main_form.getScene().getWindow());
+
+        if (file != null) {
+            data.path = file.getAbsolutePath();
+            image = new Image(file.toURI().toString(), 150, 155, false, true);
+
+            product_imageView.setImage(image);
+        }
+
+    }
+
+    public void productSelectData() {
+
+        productData prodData = product_tableView.getSelectionModel().getSelectedItem();
+        int num = product_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        product_productID.setText(prodData.getProductId());
+        product_productName.setText(prodData.getProductName());
+        product_stock.setText(String.valueOf(prodData.getStock()));
+        product_price.setText(String.valueOf(prodData.getPrice()));
+
+        data.path = prodData.getImage();
+
+        String path = "File:" + prodData.getImage();
+        data.date = String.valueOf(prodData.getDate());
+        data.id = prodData.getId();
+
+        image = new Image(path, 150, 155, false, true);
+
+        product_imageView.setImage(image);
+    }
+
+    //MERGE ALL DATAS
+    public ObservableList<productData> productDataList() {
+
+        ObservableList<productData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM product";
+
+        connect = database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            productData prodData;
+
+            while (result.next()) {
+                prodData = new productData(result.getInt("id"),
+                        result.getString("prod_id"),
+                        result.getString("prod_name"),
+                        result.getString("type"),
+                        result.getInt("stock"),
+                        result.getDouble("price"),
+                        result.getString("status"),
+                        result.getString("image"),
+                        result.getDate("date"));
+                listData.add(prodData);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    //TO SHOW DATA ON OUR TABLE
+    private ObservableList<productData> productListData;
+
+    public void productShowData() {
+        productListData = productDataList();
+
+        product_col_ProductID.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        product_col_ProductName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        product_col_type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        product_col_stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        product_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        product_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        product_col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        product_tableView.setItems(productListData);
+    }
 
     private String[] typeList = {"Batteries", "Inverter", "Panels", "Controller", "Kits", "Surge", "Cable"};
 
@@ -217,6 +407,7 @@ public class mainPageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         productTypeList();
         productStatusList();
+        productShowData();
     }
 
 }
