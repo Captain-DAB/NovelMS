@@ -447,7 +447,7 @@ public class mainPageController implements Initializable {
         product_tableView.setItems(productListData);
     }
 
-    private String[] typeList = {"Batteries", "Inverter", "Panels", "Controller", "Kits", "Surge", "Cable"};
+    private String[] typeList = {"Batteries", "Inverter", "Panels", "Controller", "Kits", "Surge", "Cable", "Electrolytes"};
 
     public void productTypeList() {
 
