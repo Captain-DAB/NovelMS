@@ -169,7 +169,7 @@ public class FXMLDocumentController implements Initializable {
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Successfully login!");
+                    alert.setContentText("Login Successfully!");
                     alert.showAndWait();
 
                     //Link your MainForm
