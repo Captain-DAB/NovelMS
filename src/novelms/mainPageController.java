@@ -136,11 +136,8 @@ public class mainPageController implements Initializable {
     private Hyperlink report;
 
     @FXML
-    private TextField searchProducts;
+    private ComboBox<String> searchCombo;
 
-    @FXML
-    private ListView<String> listView;
-    
     private Alert alert;
     private Image image;
 
@@ -217,6 +214,8 @@ public class mainPageController implements Initializable {
 
                     productShowData();
                     productClearBtn();
+
+                    populateComboBox();
                 }
 
             } catch (Exception e) {
@@ -280,6 +279,8 @@ public class mainPageController implements Initializable {
                     productShowData();
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
+
+                    populateComboBox();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
@@ -330,6 +331,8 @@ public class mainPageController implements Initializable {
                     productShowData();
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
+
+                    populateComboBox();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -532,75 +535,84 @@ public class mainPageController implements Initializable {
     }
 //------------------------------------------------------------------------------------------------------------
 
-    // Method to handle product search based on the text entered in searchProducts TextField
- public void handleProductSearch() {
-        String searchText = searchProducts.getText().trim();
-        if (searchText.isEmpty()) {
-            // Clear the list view when the search field is empty
-            listView.getItems().clear();
-            return;
-        }
-
-        // Retrieve data from the database based on the search text
-        ObservableList<String> productList = getProductListFromDatabase(searchText);
-
-        // Update the list view with the retrieved data
-        listView.setItems(productList);
-    }
-
-    private ObservableList<String> getProductListFromDatabase(String searchText) {
+    private void populateComboBox() {
+        connect = database.connectDB();
         ObservableList<String> productList = FXCollections.observableArrayList();
 
-        // Implement your database query to retrieve product names based on the search text
-        String query = "SELECT prod_name FROM product WHERE prod_name LIKE ?";
         try {
+            String query = "SELECT prod_name FROM product";
             prepare = connect.prepareStatement(query);
-            prepare.setString(1, "%" + searchText + "%");
-
-            // Execute the query
             result = prepare.executeQuery();
 
-            // Iterate through the result set and add product names to the list
             while (result.next()) {
                 String productName = result.getString("prod_name");
                 productList.add(productName);
             }
 
-            // Close resources
-            result.close();
+            searchCombo.setItems(productList);
         } catch (Exception e) {
             e.printStackTrace();
-            // Handle database exceptions appropriately
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Database Error");
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
             alert.setHeaderText(null);
-            alert.setContentText("An error occurred while retrieving product data from the database.");
+            alert.setContentText("Database Error, An error occurred while retrieving product data from the database.");
             alert.showAndWait();
-        } finally {
-            // Close the prepared statement
-            if (prepare != null) {
-                try {
-                    prepare.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+        }
+    }
+
+    public void handleSearch(ActionEvent event) {
+        String searchText = searchCombo.getEditor().getText().trim();
+        ObservableList<String> filteredList = FXCollections.observableArrayList();
+
+        for (String productName : searchCombo.getItems()) {
+            if (productName.toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(productName);
             }
         }
 
-        return productList;
+        searchCombo.setItems(filteredList);
+        searchCombo.show();
     }
 
+    private void handleAutoCompletion(String searchText) {
+        ObservableList<String> filteredList = FXCollections.observableArrayList();
+
+        for (String productName : searchCombo.getItems()) {
+            if (productName.toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(productName);
+            }
+        }
+
+        searchCombo.setItems(filteredList);
+        searchCombo.show();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         productTypeList();
         productStatusList();
         productShowData();
-        
-        connect = database.connectDB();
-        
-        // Initialize the list view
-        listView.setItems(FXCollections.observableArrayList());
+
+        populateComboBox();
+
+        // Set up auto-completion listener
+        searchCombo.setOnKeyReleased(event -> handleAutoCompletion(event.getText()));
+
+        searchCombo.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                populateComboBox();
+            }
+        });
+
+
+        searchCombo.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                searchCombo.show();
+            }
+        });
+
     }
 
 }
