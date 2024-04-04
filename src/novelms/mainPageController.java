@@ -35,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -577,6 +578,12 @@ public class mainPageController implements Initializable {
     }
 
     private void handleAutoCompletion(String searchText) {
+    if (searchText.isEmpty() && searchCombo.isShowing()) {
+        // If the search text is empty and the ComboBox dropdown is showing,
+        // repopulate the ComboBox with all available options
+        populateComboBox();
+    } else if (!searchCombo.isShowing()) {
+        // If the ComboBox dropdown is not showing, update auto-completion
         ObservableList<String> filteredList = FXCollections.observableArrayList();
 
         for (String productName : searchCombo.getItems()) {
@@ -588,6 +595,8 @@ public class mainPageController implements Initializable {
         searchCombo.setItems(filteredList);
         searchCombo.show();
     }
+}
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -597,22 +606,9 @@ public class mainPageController implements Initializable {
 
         populateComboBox();
 
-        // Set up auto-completion listener
-        searchCombo.setOnKeyReleased(event -> handleAutoCompletion(event.getText()));
-
         searchCombo.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
-                populateComboBox();
-            }
+            handleAutoCompletion(newValue);
         });
-
-
-        searchCombo.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                searchCombo.show();
-            }
-        });
-
     }
 
 }
