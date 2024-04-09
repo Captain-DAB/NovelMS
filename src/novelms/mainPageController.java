@@ -606,6 +606,8 @@ public class mainPageController implements Initializable {
 
         populateComboBox();
 
+        
+        //
         searchCombo.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             handleAutoCompletion(newValue);
         });
