@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,6 +140,36 @@ public class mainPageController implements Initializable {
     @FXML
     private ComboBox<String> searchCombo;
 
+    @FXML
+    private TextField confirmedby;
+
+    @FXML
+    private TextField custAddress;
+
+    @FXML
+    private TextField custEmail;
+
+    @FXML
+    private TextField custName;
+
+    @FXML
+    private TextField custNo;
+
+    @FXML
+    private ComboBox<?> paytype;
+
+    @FXML
+    private TextField staffName;
+
+    @FXML
+    private ComboBox<?> staffUnit;
+
+    @FXML
+    private TextField totalpay;
+
+    @FXML
+    private TextField salesComment;
+
     private Alert alert;
     private Image image;
 
@@ -146,6 +177,70 @@ public class mainPageController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    public void orderAddBtn() {
+        if (custName.getText().isEmpty()
+                || custNo.getText().isEmpty()
+                || custEmail.getText().isEmpty()
+                || custAddress.getText().isEmpty()
+                || paytype.getSelectionModel().getSelectedItem() == null
+                || confirmedby.getText().isEmpty()
+                || totalpay.getText().isEmpty()
+                || staffName.getText().isEmpty()
+                || staffUnit.getSelectionModel().getSelectedItem() == null
+                || salesComment.getText().isEmpty()) {
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+
+        } else {
+
+            String placeOrder = "INSERT INTO order "
+                    + "(id, cust_name, cust_email, address, payment_type, confirmby,"
+                    + " total_payment, staff_name, staff_unit, sales_comment, date) "
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+
+            try {
+
+                connect = database.connectDB();
+                prepare = connect.prepareStatement(placeOrder);
+
+                prepare = connect.prepareStatement(placeOrder);
+                prepare.setString(1, custName.getText());
+                prepare.setString(2, custNo.getText());
+                prepare.setString(3, custEmail.getText());
+                prepare.setString(4, custAddress.getText());
+                prepare.setString(5, (String) paytype.getSelectionModel().getSelectedItem());
+                prepare.setString(6, confirmedby.getText());
+                prepare.setString(7, totalpay.getText());
+                prepare.setString(8, staffName.getText());
+                prepare.setString(9, (String) staffUnit.getSelectionModel().getSelectedItem());
+                prepare.setString(10, salesComment.getText());
+
+                //TO GET CURRENT DATE
+                Date date = new Date();
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                prepare.setString(11, String.valueOf(sqlDate));
+
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully Added");
+                alert.showAndWait();
+
+                orderPayTypeList();
+                staffUnitList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void productAddBtn() {
 
@@ -486,6 +581,34 @@ public class mainPageController implements Initializable {
         product_status.setItems(listData);
     }
 
+    private String[] paytypeList = {"Transfer", "Point of Sales(POS)", "Cash", "GiftCard"};
+
+    public void orderPayTypeList() {
+
+        List<String> paytypeL = new ArrayList<>();
+
+        for (String data : paytypeList) {
+            paytypeL.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(paytypeL);
+        paytype.setItems(listData);
+    }
+
+    private String[] staffunitList = {"Technical", "Sales", "Attendant", "Customer Services"};
+
+    public void staffUnitList() {
+
+        List<String> staffunitL = new ArrayList<>();
+
+        for (String data : staffunitList) {
+            staffunitL.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(staffunitL);
+        staffUnit.setItems(listData);
+    }
+
     public void logout() {
 
         try {
@@ -578,25 +701,24 @@ public class mainPageController implements Initializable {
     }
 
     private void handleAutoCompletion(String searchText) {
-    if (searchText.isEmpty() && searchCombo.isShowing()) {
-        // If the search text is empty and the ComboBox dropdown is showing,
-        // repopulate the ComboBox with all available options
-        populateComboBox();
-    } else if (!searchCombo.isShowing()) {
-        // If the ComboBox dropdown is not showing, update auto-completion
-        ObservableList<String> filteredList = FXCollections.observableArrayList();
+        if (searchText.isEmpty() && searchCombo.isShowing()) {
+            // If the search text is empty and the ComboBox dropdown is showing,
+            // repopulate the ComboBox with all available options
+            populateComboBox();
+        } else if (!searchCombo.isShowing()) {
+            // If the ComboBox dropdown is not showing, update auto-completion
+            ObservableList<String> filteredList = FXCollections.observableArrayList();
 
-        for (String productName : searchCombo.getItems()) {
-            if (productName.toLowerCase().contains(searchText.toLowerCase())) {
-                filteredList.add(productName);
+            for (String productName : searchCombo.getItems()) {
+                if (productName.toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredList.add(productName);
+                }
             }
+
+            searchCombo.setItems(filteredList);
+            searchCombo.show();
         }
-
-        searchCombo.setItems(filteredList);
-        searchCombo.show();
     }
-}
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -606,7 +728,9 @@ public class mainPageController implements Initializable {
 
         populateComboBox();
 
-        
+        orderPayTypeList();
+        staffUnitList();
+
         //
         searchCombo.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             handleAutoCompletion(newValue);
