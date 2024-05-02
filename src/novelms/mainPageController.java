@@ -198,10 +198,11 @@ public class mainPageController implements Initializable {
 
         } else {
 
-            String placeOrder = "INSERT INTO order "
-                    + "(id, cust_name, cust_email, address, payment_type, confirmby,"
-                    + " total_payment, staff_name, staff_unit, sales_comment, date) "
-                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            String placeOrder = "INSERT INTO sales_order "
+                + "(cust_name, cust_no, cust_email, address, payment_type, confirmby,"
+                + " total_payment, staff_name, staff_unit, sales_comment, date) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+
 
             try {
 
@@ -311,7 +312,7 @@ public class mainPageController implements Initializable {
                     productShowData();
                     productClearBtn();
 
-                    populateComboBox();
+                    
                 }
 
             } catch (Exception e) {
@@ -376,7 +377,7 @@ public class mainPageController implements Initializable {
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
 
-                    populateComboBox();
+                    
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
@@ -428,7 +429,7 @@ public class mainPageController implements Initializable {
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
 
-                    populateComboBox();
+               
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -659,82 +660,16 @@ public class mainPageController implements Initializable {
     }
 //------------------------------------------------------------------------------------------------------------
 
-    private void populateComboBox() {
-        connect = database.connectDB();
-        ObservableList<String> productList = FXCollections.observableArrayList();
-
-        try {
-            String query = "SELECT prod_name FROM product";
-            prepare = connect.prepareStatement(query);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                String productName = result.getString("prod_name");
-                productList.add(productName);
-            }
-
-            searchCombo.setItems(productList);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Message");
-            alert.setHeaderText(null);
-            alert.setContentText("Database Error, An error occurred while retrieving product data from the database.");
-            alert.showAndWait();
-
-        }
-    }
-
-    public void handleSearch(ActionEvent event) {
-        String searchText = searchCombo.getEditor().getText().trim();
-        ObservableList<String> filteredList = FXCollections.observableArrayList();
-
-        for (String productName : searchCombo.getItems()) {
-            if (productName.toLowerCase().contains(searchText.toLowerCase())) {
-                filteredList.add(productName);
-            }
-        }
-
-        searchCombo.setItems(filteredList);
-        searchCombo.show();
-    }
-
-    private void handleAutoCompletion(String searchText) {
-        if (searchText.isEmpty() && searchCombo.isShowing()) {
-            // If the search text is empty and the ComboBox dropdown is showing,
-            // repopulate the ComboBox with all available options
-            populateComboBox();
-        } else if (!searchCombo.isShowing()) {
-            // If the ComboBox dropdown is not showing, update auto-completion
-            ObservableList<String> filteredList = FXCollections.observableArrayList();
-
-            for (String productName : searchCombo.getItems()) {
-                if (productName.toLowerCase().contains(searchText.toLowerCase())) {
-                    filteredList.add(productName);
-                }
-            }
-
-            searchCombo.setItems(filteredList);
-            searchCombo.show();
-        }
-    }
-
+ 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         productTypeList();
         productStatusList();
         productShowData();
 
-        populateComboBox();
 
         orderPayTypeList();
         staffUnitList();
-
-        //
-        searchCombo.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            handleAutoCompletion(newValue);
-        });
     }
 
 }
