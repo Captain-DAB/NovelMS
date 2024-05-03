@@ -37,6 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -170,6 +171,12 @@ public class mainPageController implements Initializable {
     @FXML
     private TextField salesComment;
 
+    @FXML
+    private TextField searchProduct;
+
+    @FXML
+    private ListView<String> productlistview;
+
     private Alert alert;
     private Image image;
 
@@ -199,10 +206,9 @@ public class mainPageController implements Initializable {
         } else {
 
             String placeOrder = "INSERT INTO sales_order "
-                + "(cust_name, cust_no, cust_email, address, payment_type, confirmby,"
-                + " total_payment, staff_name, staff_unit, sales_comment, date) "
-                + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
+                    + "(cust_name, cust_no, cust_email, address, payment_type, confirmby,"
+                    + " total_payment, staff_name, staff_unit, sales_comment, date) "
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
             try {
 
@@ -312,7 +318,6 @@ public class mainPageController implements Initializable {
                     productShowData();
                     productClearBtn();
 
-                    
                 }
 
             } catch (Exception e) {
@@ -377,7 +382,6 @@ public class mainPageController implements Initializable {
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
 
-                    
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
@@ -428,8 +432,6 @@ public class mainPageController implements Initializable {
                     productShowData();
                     //TO CLEAR YOUR FIELDS
                     productClearBtn();
-
-               
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -658,18 +660,96 @@ public class mainPageController implements Initializable {
 
         }
     }
-//------------------------------------------------------------------------------------------------------------
 
- 
+    public void selectProduct() {
+        String selectedProduct = productlistview.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            searchProduct.setText(selectedProduct);
+            productlistview.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void handleListViewKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            selectProduct();
+        } else if (event.getCode() == KeyCode.DOWN && event.isControlDown()) {
+            // Jump to the next item (scrolling down)
+            productlistview.getSelectionModel().selectNext();
+        } else if (event.getCode() == KeyCode.UP && event.isControlDown()) {
+            // Jump to the previous item (scrolling up)
+            productlistview.getSelectionModel().selectPrevious();
+        }
+    }
+
+//------------------------------------------------------------------------------------------------------------
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         productTypeList();
         productStatusList();
         productShowData();
 
-
         orderPayTypeList();
         staffUnitList();
+
+// Hide ListView initially
+        productlistview.setVisible(false);
+
+// Assuming productListView is your ListView<String> and searchProduct is your TextField
+        searchProduct.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Check if the text field is not empty
+            if (!newValue.isEmpty()) {
+
+                try {
+                    // Establish database connection
+                    connect = database.connectDB();
+
+                    // Prepare the SQL query to retrieve product names
+                    String sql = "SELECT prod_name FROM product WHERE prod_name LIKE ?";
+
+                    // Create a prepared statement
+                    prepare = connect.prepareStatement(sql);
+
+                    // Set the parameter in the SQL query to search for product names containing the newValue
+                    prepare.setString(1, "%" + newValue + "%");
+
+                    // Execute the query
+                    result = prepare.executeQuery();
+                    // Clear the existing items in the ListView
+                    productlistview.getItems().clear();
+
+                    // Iterate through the result set and add product names to the ListView
+                    while (result.next()) {
+                        String productName = result.getString("prod_name");
+                        productlistview.getItems().add(productName);
+                    }
+
+                    // Close resources
+                    result.close();
+                    prepare.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Handle database errors
+                } finally {
+                    // Close the connection
+                    if (connect != null) {
+                        try {
+                            connect.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                // Show the ListView when there is text in the TextField
+                productlistview.setVisible(true);
+            } else {
+                // Clear the ListView if the text field is empty
+                productlistview.getItems().clear();
+                // Hide the ListView when the text field is empty
+                productlistview.setVisible(false);
+            }
+        });
+
     }
 
 }
