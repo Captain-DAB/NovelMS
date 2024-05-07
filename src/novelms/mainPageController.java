@@ -38,6 +38,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -670,7 +671,14 @@ public class mainPageController implements Initializable {
     }
 
     @FXML
-    private void handleListViewKeyPressed(KeyEvent event) {
+    public void handleListViewMouseClick(MouseEvent event) {
+        if (event.getClickCount() == 1) {
+            selectProduct();
+        }
+    }
+
+    @FXML
+    public void handleListViewKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             selectProduct();
         } else if (event.getCode() == KeyCode.DOWN && event.isControlDown()) {

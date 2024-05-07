@@ -185,8 +185,9 @@
                                                 </Label>
                                                 <AnchorPane layoutX="25.0" layoutY="415.0" prefHeight="56.0" prefWidth="800.0" stylesheets="@mainPage.css">
                                                     <children>
-                                          <Button layoutX="719.0" layoutY="11.0" mnemonicParsing="false" onAction="#orderAddBtn" prefHeight="35.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainPage.css" text="Add" />
-                                          <TextField fx:id="searchProduct" layoutX="17.0" layoutY="12.0" prefHeight="33.0" prefWidth="684.0" promptText="Type Product to add..." />
+                                          <TextField fx:id="searchProduct" layoutX="17.0" layoutY="12.0" prefHeight="33.0" prefWidth="656.0" promptText="Type Product to add..." />
+                                                        <FontAwesomeIcon fill="GREY" glyphName="SEARCH" layoutX="644.0" layoutY="34.0" size="1.5em" />
+                                          <Button layoutX="686.0" layoutY="11.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" styleClass="btn" stylesheets="@mainPage.css" text="Add Product" />
                                                     </children>
                                                     <styleClass>
                                                         <String fx:value="side-page" />
@@ -203,12 +204,12 @@
                                                         <Font name="System Bold" size="13.0" />
                                                     </font>
                                                 </Label>
-                                                <Label layoutX="402.0" layoutY="492.0" opacity="0.48" text="Cost">
+                                                <Label layoutX="402.0" layoutY="492.0" opacity="0.48" text="Price">
                                                     <font>
                                                         <Font name="System Bold" size="13.0" />
                                                     </font>
                                                 </Label>
-                                                <Label layoutX="649.0" layoutY="493.0" opacity="0.48" text="Price">
+                                                <Label layoutX="649.0" layoutY="493.0" opacity="0.48" text="Amount">
                                                     <font>
                                                         <Font name="System Bold" size="13.0" />
                                                     </font>
@@ -220,12 +221,12 @@
                                                 </Label>
                                                 <Separator layoutX="21.0" layoutY="515.0" prefHeight="3.0" prefWidth="806.0" />
                                                 <ComboBox fx:id="staffUnit" layoutX="295.0" layoutY="369.0" prefHeight="30.0" prefWidth="230.0" styleClass="textfield" stylesheets="@mainPage.css" />
-                                                <Label layoutX="34.0" layoutY="523.0" text="Novel Tubular Battery">
+                                                <Label layoutX="34.0" layoutY="523.0" text="Product Name">
                                                     <font>
                                                         <Font name="System Bold" size="13.0" />
                                                     </font>
                                                 </Label>
-                                                <Label layoutX="35.0" layoutY="542.0" opacity="0.65" prefHeight="16.0" prefWidth="46.0" text="In Stock">
+                                                <Label layoutX="35.0" layoutY="542.0" opacity="0.65" prefHeight="16.0" prefWidth="46.0" text="status">
                                                     <font>
                                                         <Font name="System Italic" size="12.0" />
                                                     </font>
@@ -241,9 +242,9 @@
                                                 <Spinner layoutX="500.0" layoutY="528.0" prefHeight="25.0" prefWidth="83.0" stylesheets="@mainPage.css" />
                                                 <FontAwesomeIcon fill="#d1001f" glyphName="ANGLE_RIGHT" layoutX="23.0" layoutY="544.0" />
                                                 <Separator layoutX="22.0" layoutY="565.0" prefHeight="3.0" prefWidth="806.0" stylesheets="@mainPage.css" />
-                                                  <FontAwesomeIcon fill="GREY" glyphName="SEARCH" layoutX="737.0" layoutY="609.0" size="1.5em" />
                                     <Button layoutX="295.0" layoutY="525.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="27.0" styleClass="btn" stylesheets="@mainPage.css" text="X" />
-                                    <ListView fx:id="productlistview" layoutX="42.0" layoutY="459.0" onKeyPressed="#handleListViewKeyPressed" prefHeight="118.0" prefWidth="685.0" visible="false" />
+                                    <ListView fx:id="productlistview" layoutX="42.0" layoutY="459.0" onKeyPressed="#handleListViewKeyPressed" onMouseClicked="#handleListViewMouseClick" prefHeight="118.0" prefWidth="685.0" visible="false" />
+                                    <Button layoutX="29.0" layoutY="676.0" mnemonicParsing="false" onAction="#orderAddBtn" prefHeight="35.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainPage.css" text="Add" />
                                             </children>
                                             <styleClass>
                                                 <String fx:value="shadow" />
