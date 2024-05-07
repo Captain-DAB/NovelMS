@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -177,6 +178,18 @@ public class mainPageController implements Initializable {
 
     @FXML
     private ListView<String> productlistview;
+
+    @FXML
+    private AnchorPane product1;
+
+    @FXML
+    private Label order_name;
+
+    @FXML
+    private Label order_status;
+
+    @FXML
+    private TextField order_price;
 
     private Alert alert;
     private Image image;
