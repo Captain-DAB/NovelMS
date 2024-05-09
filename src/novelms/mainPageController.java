@@ -675,14 +675,6 @@ public class mainPageController implements Initializable {
         }
     }
 
-    public void selectProduct() {
-        String selectedProduct = productlistview.getSelectionModel().getSelectedItem();
-        if (selectedProduct != null) {
-            searchProduct.setText(selectedProduct);
-            productlistview.setVisible(false);
-        }
-    }
-
     @FXML
     public void handleListViewMouseClick(MouseEvent event) {
         if (event.getClickCount() == 1) {
@@ -701,6 +693,43 @@ public class mainPageController implements Initializable {
             // Jump to the previous item (scrolling up)
             productlistview.getSelectionModel().selectPrevious();
         }
+    }
+
+    public void selectProduct() {
+        String selectedProduct = productlistview.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            searchProduct.setText(selectedProduct);
+            productlistview.setVisible(false);
+
+            // Call fetchproductsForOrder method with the selected product's name
+            productData orderProd = fetchproductsForOrder(selectedProduct);
+
+        }
+    }
+
+    public productData fetchproductsForOrder(String productName) {
+        String sql = "SELECT p.prod_name, p.status, p.price "
+                + "FROM product p "
+                + "WHERE p.prod_name = ?";
+        productData orderProd = new productData("", "", 0.0); // Default values
+
+        try (Connection connect = database.connectDB(); PreparedStatement prepare = connect.prepareStatement(sql)) {
+            prepare.setString(1, productName);
+
+            try (ResultSet result = prepare.executeQuery()) {
+                if (result.next()) {
+                    String order_name = result.getString("prod_name");
+                    String order_status = result.getString("status");
+                    double order_price = result.getDouble("price");
+                    orderProd = new productData(order_name, order_status, order_price);
+                } else {
+                    System.out.println("No records found for Selected product ");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderProd; // Return the fetched product data
     }
 
 //------------------------------------------------------------------------------------------------------------

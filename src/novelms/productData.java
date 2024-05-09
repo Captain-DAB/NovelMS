@@ -36,7 +36,12 @@ public class productData {
         this.date = date;
 
     }
-    
+    public productData(String productName, String status, Double price){
+        this.productName = productName;
+        this.status = status;
+        this.price = price;
+        
+    }
 
     public Integer getId() {
         return id;
