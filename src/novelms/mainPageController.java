@@ -198,10 +198,10 @@ public class mainPageController implements Initializable {
 
     @FXML
     private Spinner<Integer> order_spinner;
-    
+
     private Alert alert;
     private Image image;
-    
+
     private SpinnerValueFactory<Integer> spin;
 
     private Connection connect;
@@ -748,7 +748,7 @@ public class mainPageController implements Initializable {
         }
     }
 
-    public void setQuantity(){
+    public void setQuantity() {
         spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
         order_spinner.setValueFactory(spin);
     }
@@ -759,11 +759,11 @@ public class mainPageController implements Initializable {
         productTypeList();
         productStatusList();
         productShowData();
-
-        orderPayTypeList();
-        staffUnitList();
         
         setQuantity();
+        
+        orderPayTypeList();
+        staffUnitList();
 
 // Hide ListView initially
         productlistview.setVisible(false);
