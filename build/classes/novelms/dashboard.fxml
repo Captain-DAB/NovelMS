@@ -187,7 +187,7 @@
                                                     <children>
                                           <TextField fx:id="searchProduct" layoutX="14.0" layoutY="12.0" prefHeight="33.0" prefWidth="700.0" promptText="Type Product to add..." />
                                                         <FontAwesomeIcon fill="GREY" glyphName="SEARCH" layoutX="687.0" layoutY="34.0" size="1.5em" />
-                                          <Button layoutX="728.0" layoutY="11.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainPage.css" text="Place" />
+                                          <Button layoutX="728.0" layoutY="11.0" mnemonicParsing="false" onAction="#placeProduct" prefHeight="35.0" prefWidth="66.0" styleClass="btn" stylesheets="@mainPage.css" text="Place" />
                                                     </children>
                                                     <styleClass>
                                                         <String fx:value="side-page" />

@@ -701,35 +701,41 @@ public class mainPageController implements Initializable {
             searchProduct.setText(selectedProduct);
             productlistview.setVisible(false);
 
-            // Call fetchproductsForOrder method with the selected product's name
-            productData orderProd = fetchproductsForOrder(selectedProduct);
-
         }
     }
 
-    public productData fetchproductsForOrder(String productName) {
+    public void placeProduct(ActionEvent event) {
+        String selectedProduct = searchProduct.getText(); // Get the selected product from the search field
+
+        // Define SQL query to fetch product data
         String sql = "SELECT p.prod_name, p.status, p.price "
                 + "FROM product p "
                 + "WHERE p.prod_name = ?";
-        productData orderProd = new productData("", "", 0.0); // Default values
 
         try (Connection connect = database.connectDB(); PreparedStatement prepare = connect.prepareStatement(sql)) {
-            prepare.setString(1, productName);
+            // Set the product name as the parameter for the SQL query
+            prepare.setString(1, selectedProduct);
 
             try (ResultSet result = prepare.executeQuery()) {
                 if (result.next()) {
-                    String order_name = result.getString("prod_name");
-                    String order_status = result.getString("status");
-                    double order_price = result.getDouble("price");
-                    orderProd = new productData(order_name, order_status, order_price);
+                    // If product data is found, retrieve and set the values to UI elements
+                    String orderName = result.getString("prod_name");
+                    String orderStatus = result.getString("status");
+                    double orderPrice = result.getDouble("price");
+
+// Assuming order_name, order_status, and order_price are labels representing UI elements
+                    order_name.setText(orderName);
+                    order_status.setText(orderStatus);
+                    order_price.setText(String.valueOf(orderPrice));
+
                 } else {
-                    System.out.println("No records found for Selected product ");
+                    // Handle case where product data is not found
+                    System.out.println("No records found for selected product: " + selectedProduct);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return orderProd; // Return the fetched product data
     }
 
 //------------------------------------------------------------------------------------------------------------
