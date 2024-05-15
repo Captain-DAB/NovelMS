@@ -31,6 +31,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -180,7 +182,7 @@ public class mainPageController implements Initializable {
     private ListView<String> productlistview;
 
     @FXML
-    private AnchorPane product1;
+    private AnchorPane products;
 
     @FXML
     private Label order_name;
@@ -191,8 +193,16 @@ public class mainPageController implements Initializable {
     @FXML
     private TextField order_price;
 
+    @FXML
+    private Button addColumn;
+
+    @FXML
+    private Spinner<Integer> order_spinner;
+    
     private Alert alert;
     private Image image;
+    
+    private SpinnerValueFactory<Integer> spin;
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -738,6 +748,11 @@ public class mainPageController implements Initializable {
         }
     }
 
+    public void setQuantity(){
+        spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
+        order_spinner.setValueFactory(spin);
+    }
+
 //------------------------------------------------------------------------------------------------------------
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -747,6 +762,8 @@ public class mainPageController implements Initializable {
 
         orderPayTypeList();
         staffUnitList();
+        
+        setQuantity();
 
 // Hide ListView initially
         productlistview.setVisible(false);
