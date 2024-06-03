@@ -36,7 +36,8 @@ public class productData {
         this.date = date;
 
     }
-    public productData(String productName, String status, Double price){
+    public productData(Integer id, String productName, String status, Double price){
+        this.id = id;
         this.productName = productName;
         this.status = status;
         this.price = price;

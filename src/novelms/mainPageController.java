@@ -31,6 +31,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
@@ -43,6 +44,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -197,7 +199,18 @@ public class mainPageController implements Initializable {
     private Button addColumn;
 
     @FXML
+    private TextField order_amount;
+
+    @FXML
+    private GridPane product_gridpane;
+
+    @FXML
+    private ScrollPane product_scrollpane;
+
+    @FXML
     private Spinner<Integer> order_spinner;
+
+    private ObservableList<productData> cardListData = FXCollections.observableArrayList();
 
     private Alert alert;
     private Image image;
@@ -636,6 +649,64 @@ public class mainPageController implements Initializable {
         staffUnit.setItems(listData);
     }
 
+    public ObservableList<productData> orderGetData() {
+
+        String selectedProduct = searchProduct.getText(); // Get the selected product from the search field
+
+        // Define SQL query to fetch data for the specific product
+        String sql = "SELECT * FROM product WHERE prod_name = ?";
+
+        ObservableList<productData> listData = FXCollections.observableArrayList();
+
+        connect = database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            // Set the value for the first parameter (index 1) with the selected product name
+            prepare.setString(1, selectedProduct);
+            result = prepare.executeQuery();
+
+            productData prod;
+
+            while (result.next()) {
+                prod = new productData(result.getInt("id"),
+                        result.getString("prod_name"),
+                        result.getString("status"),
+                        result.getDouble("price"));
+
+                listData.add(prod);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return listData;
+    }
+// A class-level variable to keep track of the current row number
+    private int currentRow = 0;
+
+    public void orderDisplayCard() {
+        ObservableList<productData> newProducts = orderGetData();
+
+        // Iterate over the newly fetched products and add them to the grid pane
+        for (productData prod : newProducts) {
+            try {
+                FXMLLoader load = new FXMLLoader();
+                load.setLocation(getClass().getResource("addProducts.fxml"));
+                AnchorPane pane = load.load();
+                addProductController cardC = load.getController();
+                cardC.setData(prod);
+
+                // Add the product pane to the grid pane at the next available row and column (always 0)
+                product_gridpane.add(pane, 0, currentRow++);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public void logout() {
 
         try {
@@ -714,57 +785,44 @@ public class mainPageController implements Initializable {
         }
     }
 
-    public void placeProduct(ActionEvent event) {
-        String selectedProduct = searchProduct.getText(); // Get the selected product from the search field
 
-        // Define SQL query to fetch product data
-        String sql = "SELECT p.prod_name, p.status, p.price "
-                + "FROM product p "
-                + "WHERE p.prod_name = ?";
-
-        try (Connection connect = database.connectDB(); PreparedStatement prepare = connect.prepareStatement(sql)) {
-            // Set the product name as the parameter for the SQL query
-            prepare.setString(1, selectedProduct);
-
-            try (ResultSet result = prepare.executeQuery()) {
-                if (result.next()) {
-                    // If product data is found, retrieve and set the values to UI elements
-                    String orderName = result.getString("prod_name");
-                    String orderStatus = result.getString("status");
-                    double orderPrice = result.getDouble("price");
-
-// Assuming order_name, order_status, and order_price are labels representing UI elements
-                    order_name.setText(orderName);
-                    order_status.setText(orderStatus);
-                    order_price.setText(String.valueOf(orderPrice));
-
-                } else {
-                    // Handle case where product data is not found
-                    System.out.println("No records found for selected product: " + selectedProduct);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setQuantity() {
-        spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
-        order_spinner.setValueFactory(spin);
-    }
-
+//    public void updateOrderAmount() {
+//        try {
+//            // Parse the value from order_price (assuming it's a double)
+//            double getPrice = Double.parseDouble(order_price.getText());
+//
+//            // Get the selected value from order_spinner
+//            int quantity = order_spinner.getValue();
+//
+//            // Calculate the total amount (price * quantity)
+//            double amount = getPrice * quantity;
+//
+//            // Update the order_amount field with the formatted amount
+//            order_amount.setText(String.format("%.2f", amount));
+//        } catch (NumberFormatException e) {
+//            // Handle invalid input in order_price (optional)
+//            System.err.println("Invalid price format in order_price");
+//        }
+//    }
 //------------------------------------------------------------------------------------------------------------
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         productTypeList();
         productStatusList();
         productShowData();
-        
-        setQuantity();
-        
+
         orderPayTypeList();
         staffUnitList();
+//        orderDisplayCard();
 
+//        // initialize spinner
+//        spin = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
+//        order_spinner.setValueFactory(spin);
+//
+//        // Add a change listener to order_spinner
+//        order_spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+////            updateOrderAmount();
+//        });
 // Hide ListView initially
         productlistview.setVisible(false);
 
