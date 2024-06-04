@@ -61,6 +61,12 @@ public class mainPageController implements Initializable {
     private Hyperlink employee;
 
     @FXML
+    private Hyperlink installation;
+
+    @FXML
+    private AnchorPane installationForm;
+    
+    @FXML
     private Button logout;
 
     @FXML
@@ -745,6 +751,7 @@ public class mainPageController implements Initializable {
         if (event.getSource() == product) {
             productForm.setVisible(true);
             orderForm.setVisible(false);
+            installationForm.setVisible(false);
 
             productTypeList();
             productStatusList();
@@ -752,7 +759,12 @@ public class mainPageController implements Initializable {
         } else if (event.getSource() == order) {
             productForm.setVisible(false);
             orderForm.setVisible(true);
+            installationForm.setVisible(false);
 
+        } else if (event.getSource() == installation) {
+            productForm.setVisible(false);
+            orderForm.setVisible(false);
+            installationForm.setVisible(true);
         }
     }
 
@@ -784,7 +796,6 @@ public class mainPageController implements Initializable {
 
         }
     }
-
 
 //    public void updateOrderAmount() {
 //        try {
